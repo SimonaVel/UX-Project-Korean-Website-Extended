@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Log In • KoCosmetics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;500&family=Noto+Serif+Display:ital,wght@1,200&display=swap"
+    rel="stylesheet">
+
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Urbanist', sans-serif;
+      background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 380px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .card .logo {
+      font-family: 'Noto Serif Display', serif;
+      font-size: 2.8rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    .card .logo span {
+      color: #fe7186;
+    }
+
+    .card p.subtitle {
+      font-size: 1.4rem;
+      color: #777;
+      margin-bottom: 2rem;
+    }
+
+    .card input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid #dbdbdb;
+      border-radius: 8px;
+      background: #fafafa;
+      font-size: 1.5rem;
+    }
+    .card input:focus {
+      outline: none;
+      border-color: #fe7186;
+      background: #fff;
+    }
+
+    .card button {
+      width: 100%;
+      padding: 0.85rem;
+      background: #fe7186;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.6rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    .card button:hover {
+      background: #e05579;
+    }
+
+    .card .switch {
+      margin-top: 1.5rem;
+      font-size: 1.4rem;
+      color: #555;
+    }
+    .card .switch a {
+      color: #fe7186;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: .2rem;
+    }
+    .card .switch a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <a href="index.html" class="logo">KoCosmetics<span>.</span></a>
+    <p class="subtitle">Log in to your account</p>
+
+    <form id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Email" required>
+      <input type="password" id="loginPassword" placeholder="Password" required>
+      <button type="submit">Log In</button>
+    </form>
+
+    <p class="switch">Don't have an account?
+      <a href="register.html">Sign Up</a>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const pw = document.getElementById('loginPassword').value;
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const user = users.find(u => u.email === email && u.password === pw);
+      if (!user) {
+        alert('Invalid email or password.');
+        return;
+      }
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      window.location.href = 'profile.html';
+    });
+  </script>
+
+</body>
+</html>
