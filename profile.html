@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Profile - KoCosmetics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@1,200&family=Urbanist:wght@200;300&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Header (same as other pages) -->
+  <header>
+    <input type="checkbox" id="drop-down-menu">
+    <label for="drop-down-menu" class="fas fa-bars"></label>
+    <a href="index.html" class="logo">KoCosmetics<span>.</span></a>
+    <nav class="navbar">
+      <a href="index.html#home">home</a>
+      <a href="index.html#about">about</a>
+      <a href="index.html#products">products</a>
+      <a href="index.html#review">review</a>
+      <a href="index.html#contact">contact</a>
+    </nav>
+    <div class="icons">
+      <a href="wishlist.html" class="fas fa-heart"></a>
+      <a href="cart.html" class="fas fa-shopping-cart"></a>
+      <a href="profile.html" class="fas fa-user"></a>
+    </div>
+  </header>
+
+  <!-- Profile Section -->
+  <section class="cart" style="margin-top: 10rem;">
+    <h1 class="heading">Your <span>Profile</span></h1>
+    <div class="profile-container">
+
+      <!-- 1. Profile Info -->
+      <div class="profile-info">
+        <img src="https://via.placeholder.com/120" alt="Avatar" class="avatar">
+        <div class="info">
+          <h2 id="userName">Jane Doe</h2>
+          <p id="userEmail">jane.doe@example.com</p>
+        </div>
+      </div>
+
+      <!-- 2. Quick Stats -->
+      <div class="stats-container">
+        <div class="stats-box">
+          <i class="fas fa-shopping-cart fa-2x"></i>
+          <div>
+            <h3 id="cartCount">0</h3>
+            <p>In Cart</p>
+          </div>
+        </div>
+        <div class="stats-box">
+          <i class="fas fa-heart fa-2x"></i>
+          <div>
+            <h3 id="wishCount">0</h3>
+            <p>In Wishlist</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Order History -->
+      <section class="order-history">
+        <h2 class="subheading">Order <span>History</span></h2>
+        <ul id="ordersList">
+          <li>No orders yet.</li>
+        </ul>
+      </section>
+
+      <!-- 4. Account Settings -->
+      <section class="settings">
+        <h2 class="subheading">Account <span>Settings</span></h2>
+        <form id="settingsForm">
+          <input type="text" id="nameInput" class="box" placeholder="Name">
+          <input type="email" id="emailInput" class="box" placeholder="Email">
+          <button type="submit" class="button">Save Changes</button>
+        </form>
+      </section>
+
+    </div>
+  </section>
+
+  <style>
+    .profile-container {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      padding: 2rem 9%;
+    }
+
+    /* Profile Info */
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background: #fff;
+      padding: 2rem;
+      border-radius: .5rem;
+      box-shadow: 0 .5rem 1rem rgba(0,0,0,0.1);
+    }
+    .profile-info .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .profile-info .info h2 {
+      font-family: 'Noto Serif Display', serif;
+      font-size: 2.4rem;
+      color: #333;
+    }
+    .profile-info .info p {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 1.6rem;
+      color: #666;
+    }
+
+    /* Stats */
+    .stats-container {
+      display: flex;
+      gap: 2rem;
+    }
+    .stats-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: .5rem;
+      box-shadow: 0 .5rem 1rem rgba(0,0,0,0.1);
+    }
+    .stats-box h3 {
+      font-family: 'Noto Serif Display', serif;
+      font-size: 2.2rem;
+      margin: 0;
+    }
+    .stats-box p {
+      font-family: 'Urbanist', sans-serif;
+      margin: 0;
+      color: #666;
+    }
+
+    /* Subheadings */
+    .subheading {
+      font-family: 'Noto Serif Display', serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    .subheading span {
+      color: #fe7186;
+    }
+
+    /* Order History */
+    .order-history ul {
+      list-style: none;
+      padding-left: 0;
+      font-family: 'Urbanist', sans-serif;
+      color: #666;
+    }
+
+    /* Order history thumbnails */
+    .order-history li {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+    }
+
+    .order-history .order-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    }
+
+    .order-history .order-items li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Urbanist', sans-serif;
+    color: #666;
+    }
+
+    .order-history .order-items img {
+    width: 50px;
+    height: auto;
+    border-radius: .3rem;
+    object-fit: cover;
+    }
+
+
+    /* Settings Form */
+    .settings form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .settings .box {
+      padding: 1rem;
+      font-size: 1.7rem;
+      text-transform: none;
+      border: .2rem solid rgba(0,0,0,0.3);
+      border-radius: .5rem;
+      font-family: 'Urbanist', sans-serif;
+    }
+    .settings .box:focus {
+      border-color: #fe7186;
+    }
+    .settings .button {
+      align-self: flex-start;
+      padding: 1rem 3rem;
+      font-size: 1.7rem;
+    }
+
+    @media (max-width: 768px) {
+      .stats-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load counts from localStorage
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      document.getElementById('cartCount').innerText = cart.reduce((sum, i) => sum + i.quantity, 0);
+      document.getElementById('wishCount').innerText = wishlist.length;
+  
+      // Settings form: prefill and save to localStorage
+      const form = document.getElementById('settingsForm');
+      const nameInput = document.getElementById('nameInput');
+      const emailInput = document.getElementById('emailInput');
+      const storedProfile = JSON.parse(localStorage.getItem('profile')) || {
+        name: 'Jane Doe',
+        email: 'jane.doe@example.com'
+      };
+      nameInput.value = storedProfile.name;
+      emailInput.value = storedProfile.email;
+      document.getElementById('userName').innerText = storedProfile.name;
+      document.getElementById('userEmail').innerText = storedProfile.email;
+  
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const profile = { name: nameInput.value, email: emailInput.value };
+        localStorage.setItem('profile', JSON.stringify(profile));
+        alert('Profile updated!');
+        document.getElementById('userName').innerText = profile.name;
+        document.getElementById('userEmail').innerText = profile.email;
+      });
+  
+      // Render dynamic order history
+    const ordersList = document.getElementById('ordersList');
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    ordersList.innerHTML = '';
+
+    if (orders.length === 0) {
+    ordersList.innerHTML = '<li>No orders yet.</li>';
+    } else {
+    orders.slice().reverse().forEach(order => {
+        const date = new Date(order.date).toLocaleString();
+        // build each item with a thumbnail
+        const itemsHTML = order.items.map(i =>
+        `<li>
+            <img src="${i.img}" alt="${i.name}">
+            <span>${i.quantity}× ${i.name} @ $${i.price.toFixed(2)}</span>
+        </li>`
+        ).join('');
+        ordersList.insertAdjacentHTML('beforeend', `
+        <li>
+            <strong>Order on ${date}</strong>
+            <ul class="order-items">${itemsHTML}</ul>
+        </li>
+        `);
+    });
+    }
+
+    });
+  </script>
+  
+</body>
+</html>
