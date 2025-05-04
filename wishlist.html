@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Wishlist - KoCosmetics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Fonts & CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@1,200&family=Urbanist:wght@200;300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <input type="checkbox" id="drop-down-menu">
+    <label for="drop-down-menu" class="fas fa-bars"></label>
+    <a href="index.html" class="logo">KoCosmetics<span>.</span></a>
+    <nav class="navbar">
+        <a href="index.html#home">home</a>
+        <a href="index.html#about">about</a>
+        <a href="index.html#products">products</a>
+        <a href="index.html#review">review</a>
+        <a href="index.html#contact">contact</a>
+    </nav>
+    <div class="icons">
+        <a href="wishlist.html" class="fas fa-heart"></a>
+        <a href="cart.html" class="fas fa-shopping-cart"></a>
+        <a href="#" class="fas fa-user"></a>
+    </div>
+</header>
+
+<section class="cart" style="margin-top: 10rem;">
+    <h1 class="heading">Your <span>Loved Items</span></h1>
+    <div style="text-align:right; padding: 0 9%;">
+        <button id="addAllToCart" class="button" style="margin-bottom: 2rem;">Add All to Cart</button>
+    </div>
+    <div class="cart-container" id="wishlistContainer"></div>
+</section>
+
+<style>
+/* Reuse cart styles */
+.cart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem 9%;
+}
+
+.cart-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background: #fff;
+    padding: 2rem;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,0.1);
+    border-radius: .5rem;
+    gap: 2rem;
+}
+
+.cart-item img {
+    width: 120px;
+    height: auto;
+    border-radius: .5rem;
+}
+
+.cart-item .details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+}
+
+.cart-item h3 {
+    font-size: 2.2rem;
+    font-family: 'Noto Serif Display', serif;
+    color: #333;
+}
+
+.cart-item p {
+    font-size: 1.6rem;
+    font-family: 'Urbanist', sans-serif;
+    color: #666;
+}
+
+.wishlist-btn {
+    background: #fe7186;
+    color: white;
+    border: none;
+    border-radius: .5rem;
+    padding: .7rem 1.5rem;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 1.4rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.wishlist-btn:hover {
+    background: #333;
+}
+
+@media (max-width: 768px) {
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cart-item img {
+        margin-bottom: 1rem;
+    }
+
+    .cart-container {
+        text-align: center;
+    }
+}
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("wishlistContainer");
+        const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        function saveCart() {
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+
+        function renderWishlist() {
+            container.innerHTML = "";
+
+            if (wishlist.length === 0) {
+                container.innerHTML = "<p style='font-size:2rem; font-family: Urbanist, sans-serif;'>Your wishlist is empty.</p>";
+                document.getElementById("addAllToCart").style.display = "none";
+                return;
+            }
+
+            wishlist.forEach((item, index) => {
+                const itemHTML = `
+                    <div class="cart-item" data-index="${index}">
+                        <img src="${item.img}" alt="${item.name}">
+                        <div class="details">
+                            <h3>${item.name}</h3>
+                            <p>Price: $${item.price.toFixed(2)}</p>
+                            <div>
+                                <button class="wishlist-btn remove-btn">Remove</button>
+                                <button class="wishlist-btn move-btn">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                container.insertAdjacentHTML("beforeend", itemHTML);
+            });
+
+            attachEvents();
+        }
+
+        function attachEvents() {
+            const removeBtns = container.querySelectorAll(".remove-btn");
+            const moveBtns = container.querySelectorAll(".move-btn");
+
+            removeBtns.forEach((btn, i) => {
+                btn.addEventListener("click", () => {
+                    wishlist.splice(i, 1);
+                    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+                    renderWishlist();
+                });
+            });
+
+            moveBtns.forEach((btn, i) => {
+                btn.addEventListener("click", () => {
+                    addToCart(wishlist[i]);
+                    wishlist.splice(i, 1);
+                    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+                    renderWishlist();
+                });
+            });
+        }
+
+        function addToCart(item) {
+            const exists = cart.find(p => p.name === item.name);
+            if (exists) {
+                exists.quantity += 1;
+            } else {
+                cart.push({ ...item, quantity: 1 });
+            }
+            saveCart();
+        }
+
+        // Add all to cart
+        document.getElementById("addAllToCart").addEventListener("click", () => {
+            wishlist.forEach(item => addToCart(item));
+            localStorage.removeItem("wishlist");
+            renderWishlist();
+            alert("All loved items moved to cart!");
+        });
+
+        renderWishlist();
+    });
+</script>
+</body>
+</html>

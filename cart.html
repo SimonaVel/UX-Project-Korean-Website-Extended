@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@1,200&family=Urbanist:wght@200;300&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - KoCosmetics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <input type="checkbox" id="drop-down-menu">
+        <label for="drop-down-menu" class="fas fa-bars"></label>
+        <a href="index.html" class="logo">KoCosmetics<span>.</span></a>
+        <nav class="navbar">
+            <a href="index.html#home">home</a>
+            <a href="index.html#about">about</a>
+            <a href="index.html#products">products</a>
+            <a href="index.html#review">review</a>
+            <a href="index.html#contact">contact</a>
+        </nav>
+        <div class="icons">
+            <a href="#" class="fas fa-heart"></a>
+            <a href="cart.html" class="fas fa-shopping-cart"></a>
+            <a href="#" class="fas fa-user"></a>
+        </div>
+    </header>
+    
+    <!-- Section wrapper to align with site style -->
+    <section class="cart" style="margin-top: 10rem;">
+        <h1 class="heading">Your <span>Cart</span></h1>
+        <div class="cart-container" id="cartContainer"></div>
+    </section>
+    
+    <style>
+    .cart-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem 9%;
+    }
+    
+    /* Cart item layout */
+    .cart-item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        background: #fff;
+        padding: 2rem;
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,0.1);
+        border-radius: .5rem;
+        gap: 2rem;
+    }
+    
+    /* Product image */
+    .cart-item img {
+        width: 120px;
+        height: auto;
+        border-radius: .5rem;
+    }
+    
+    /* Product details */
+    .cart-item .details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+    
+    /* Product name */
+    .cart-item h3 {
+        font-size: 2.2rem;
+        color: #333;
+        font-family: 'Noto Serif Display', serif;
+    }
+    
+    /* Price text */
+    .cart-item p {
+        font-size: 1.6rem;
+        color: #666;
+        font-family: 'Urbanist', sans-serif;
+    }
+    
+    /* Quantity and Remove aligned inline */
+    .cart-item .quantity,
+    .cart-item .remove-btn {
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: 0.5rem;
+    }
+    
+    /* Quantity input */
+    .cart-item .quantity {
+        width: 60px;
+        padding: .5rem;
+        font-size: 1.5rem;
+        text-align: center;
+        margin-right: 1rem;
+        border: 1px solid #ccc;
+        border-radius: .5rem;
+        font-family: 'Urbanist', sans-serif;
+    }
+    
+    /* Remove button */
+    .remove-btn {
+        padding: .6rem 1.5rem;
+        background: #fe7186;
+        color: white;
+        border: none;
+        border-radius: .5rem;
+        cursor: pointer;
+        font-size: 1.4rem;
+        font-family: 'Urbanist', sans-serif;
+    }
+    
+    /* Remove button hover */
+    .remove-btn:hover {
+        background: #333;
+    }
+    
+    /* Total box */
+    .total-box {
+        text-align: right;
+        padding-top: 2rem;
+        border-top: 1px solid #eee;
+    }
+    
+    .total-box h2 {
+        font-size: 2.8rem;
+        font-family: 'Noto Serif Display', serif;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+    
+    .total-box .button {
+        background: #333;
+        color: #fff;
+        border-radius: 5rem;
+        padding: 1rem 3rem;
+        font-size: 1.7rem;
+        font-family: 'Urbanist', sans-serif;
+        cursor: pointer;
+    }
+    
+    .total-box .button:hover {
+        background: #fe7186;
+    }
+    
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+        .cart-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    
+        .cart-item img {
+            margin-bottom: 1rem;
+        }
+    
+        .total-box {
+            text-align: center;
+        }
+    }
+    </style>
+    
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const cartContainer = document.getElementById("cartContainer");
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        function renderCart() {
+            cartContainer.innerHTML = ""; // Clear
+
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+
+                const itemHTML = `
+                <div class="cart-item" data-index="${index}">
+                    <img src="${item.img}" alt="Product">
+                    <div class="details">
+                        <h3>${item.name}</h3>
+                        <p>Price: $${item.price.toFixed(2)}</p>
+                        <input type="number" value="${item.quantity}" min="1" class="quantity">
+                        <button class="remove-btn">Remove</button>
+                    </div>
+                </div>
+                `;
+
+                cartContainer.insertAdjacentHTML("beforeend", itemHTML);
+            });
+
+            const totalBoxHTML = `
+                <div class="total-box">
+                    <h2>Total: $${total.toFixed(2)}</h2>
+                    <button class="button">Proceed to Checkout</button>
+                </div>
+            `;
+
+            cartContainer.insertAdjacentHTML("beforeend", totalBoxHTML);
+            attachEvents();
+        }
+
+        function attachEvents() {
+            const removeButtons = cartContainer.querySelectorAll(".remove-btn");
+            const quantityInputs = cartContainer.querySelectorAll(".quantity");
+
+            removeButtons.forEach((btn, index) => {
+                btn.addEventListener("click", () => {
+                    cart.splice(index, 1);
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    renderCart();
+                });
+            });
+
+            quantityInputs.forEach((input, index) => {
+                input.addEventListener("change", () => {
+                    const newQuantity = Math.max(1, parseInt(input.value));
+                    cart[index].quantity = newQuantity;
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    renderCart();
+                });
+            });
+        }
+
+        renderCart();
+    });
+</script>
+
+</body>
+</html>
