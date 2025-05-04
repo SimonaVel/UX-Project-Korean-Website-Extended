@@ -104,7 +104,7 @@
 
     <form id="resetForm">
       <input type="email" id="resetEmail" placeholder="Enter your email" required>
-      <button type="submit">Resend Reset Code</button>
+      <button type="submit">Send Reset Code</button>
     </form>
 
     <p class="switch">Remembered your password?
@@ -120,7 +120,8 @@
         alert("Please enter your email.");
         return;
       }
-      alert("A reset code has been sent to ${email}.");
+      alert(`A reset code has been sent to ${email}.`);
+      window.location.href = 'login.html';
     });
   </script>
 
